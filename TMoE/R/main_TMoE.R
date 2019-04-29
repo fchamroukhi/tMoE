@@ -1,6 +1,6 @@
 rm(list = ls())
 source("R/FData.R")
-source("R/ModelSNMoE.R")
+source("R/ModelTMoE.R")
 source("R/ModelLearner.R")
 
 
