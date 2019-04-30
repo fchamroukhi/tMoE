@@ -1,5 +1,6 @@
 source("R/utils.R")
 source("R/IRLS.R")
+library(pracma)
 
 ParamTMoE <- setRefClass(
   "ParamTMoE",
@@ -74,11 +75,11 @@ ParamTMoE <- setRefClass(
       for (k in 1:modelTMoE$K) {
         #update the regression coefficients
 
-        Xbeta <- phiBeta$XBeta * (sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k] ) * ones(1, modelTMoE$p+1))
+        Xbeta <- phiBeta$XBeta * (matrix( sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k] )) %*% ones(1, modelTMoE$p+1))
         yk <- modelTMoE$Y * sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k])
 
         #update the regression coefficients
-        beta[, k] <<- solve((t(Xbeta) %*% Xbeta)) %*% (t(tauik_Xbeta) %*% yk)
+        beta[, k] <<- solve((t(Xbeta) %*% Xbeta)) %*% (t(Xbeta) %*% yk)
 
         # update the variances sigma2k
         sigma[k] <<- sum(statTMoE$tik[, k] * statTMoE$Wik[,k] * ((modelTMoE$Y - phiBeta$XBeta %*% beta[, k])^2)) / sum(statTMoE$tik[,k])
@@ -88,15 +89,12 @@ ParamTMoE <- setRefClass(
 
 
         # update the deltak (the skewness parameter)
-        delta[k] <<- uniroot(f <- function(dlt) {
-          sigma[k] * dlt * (1 - dlt ^ 2) * sum(statTMoE$tik[, k]) + (1 + dlt ^ 2) * sum(statTMoE$tik[, k] * (modelTMoE$Y - phiBeta$XBeta %*% beta[, k]) * statTMoE$E1ik[, k])
-          - dlt * sum(statTMoE$tik[, k] * (statTMoE$E2ik[, k] + (modelTMoE$Y - phiBeta$XBeta %*% beta[, k]) ^ 2))
-        }, c(-1, 1))$root
 
-        delta[k] <<- uniroot(f <- function(dlt) {
-          psigamma(dlt/2) + log(dlt/2) +1 + (1/sum(statTMoE$tik[, k])) * sum(statTMoE$tik[, k] * (log(statTMoE$Wik[,k]) - statTMoE$Wik[,k]))
-                                             +psigamma((delta[k] + 1)/2) - log((delta[k] + 1)/2)
-        }, c(-1, 1))$root
+
+        delta[k] <<- fzero(f <- function(dlt) {
+          return(- psigamma(dlt/2) + log(dlt/2) +1 + (1/sum(statTMoE$tik[, k])) * sum(statTMoE$tik[, k] * (log(statTMoE$Wik[,k]) - statTMoE$Wik[,k]))
+          +psigamma((delta[k] + 1)/2) - log((delta[k] + 1)/2))
+        }, delta[k])$x
 
       }
 

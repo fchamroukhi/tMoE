@@ -3,7 +3,7 @@ source("R/ParamTMoE.R")
 source("R/StatTMoE.R")
 source("R/FittedTMoE.R")
 
-EM <- function(modelSNMoE, n_tries = 1, max_iter = 1500, threshold = 1e-6, verbose = FALSE, verbose_IRLS = FALSE) {
+EM <- function(modelTMoE, n_tries = 1, max_iter = 1500, threshold = 1e-6, verbose = FALSE, verbose_IRLS = FALSE) {
     phiBeta <- designmatrix(x = modelTMoE$X, p = modelTMoE$p)
     phiAlpha <- designmatrix(x = modelTMoE$X, p = modelTMoE$q)
 
@@ -32,7 +32,7 @@ EM <- function(modelSNMoE, n_tries = 1, max_iter = 1500, threshold = 1e-6, verbo
       while (!converge && (iter <= max_iter)) {
         stat$EStep(modelTMoE, param, phiBeta, phiAlpha)
 
-        reg_irls <- param$MStep(modelSNMoE, stat, phiAlpha, phiBeta, verbose_IRLS)
+        reg_irls <- param$MStep(modelTMoE, stat, phiAlpha, phiBeta, verbose_IRLS)
 
         stat$computeLikelihood(reg_irls)
         # FIN EM
@@ -83,8 +83,8 @@ EM <- function(modelSNMoE, n_tries = 1, max_iter = 1500, threshold = 1e-6, verbo
 
 
     # FINISH computation of statSolution
-    statSolution$computeStats(modelSNMoE, paramSolution, phiBeta, phiAlpha, cpu_time_all)
+    statSolution$computeStats(modelTMoE, paramSolution, phiBeta, phiAlpha, cpu_time_all)
 
-    return(FittedSNMoE(modelSNMoE, paramSolution, statSolution))
+    return(FittedTMoE(modelTMoE, paramSolution, statSolution))
 
   }

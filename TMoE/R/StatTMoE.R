@@ -67,16 +67,16 @@ StatTMoE <- setRefClass(
       cpu_time <<- mean(cpu_time_all)
 
       # E[yi|zi=k]
-      #Ey_k <<- phiBeta$XBeta[1:modelSNMoE$n, ] %*% paramSNMoE$beta + ones(modelSNMoE$n, 1) %*% (sqrt(2 / pi) * paramSNMoE$delta * paramSNMoE$sigma)
+      Ey_k <<- phiBeta$XBeta[1:modelSNMoE$n, ] %*% paramSNMoE$beta
 
       # E[yi]
-      #Ey <<- matrix(apply(piik * Ey_k, 1, sum))
+      Ey <<- matrix(apply(piik * Ey_k, 1, sum))
 
       # Var[yi|zi=k]
-      #Var_yk <<- (1 - (2 / pi) * (paramSNMoE$delta ^ 2)) * (paramSNMoE$sigma ^ 2)
+      Var_yk <<- paramSNMoE$delta/(paramSNMoE$delta - 2) * paramSNMoE$sigma
 
       # Var[yi]
-      #Vary <<- apply(piik * (Ey_k ^ 2 + ones(modelSNMoE$n, 1) %*% Var_yk), 1, sum) - Ey ^2
+      Vary <<- apply(piik * (Ey_k ^ 2 + ones(modelSNMoE$n, 1) %*% Var_yk), 1, sum) - Ey ^2
 
 
       ### BIC AIC et ICL
