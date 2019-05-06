@@ -76,7 +76,7 @@ StatTMoE <- setRefClass(
       Var_yk <<- paramSNMoE$delta/(paramSNMoE$delta - 2) * paramSNMoE$sigma
 
       # Var[yi]
-      Vary <<- apply(piik * (Ey_k ^ 2 + ones(modelSNMoE$n, 1) %*% Var_yk), 1, sum) - Ey ^2
+      Vary <<- apply(piik * (Ey_k ^ 2 + ones(modelSNMoE$n, 1) %*% Var_yk), 1, sum) - Ey ^ 2
 
 
       ### BIC AIC et ICL

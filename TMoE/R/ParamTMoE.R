@@ -75,7 +75,7 @@ ParamTMoE <- setRefClass(
       for (k in 1:modelTMoE$K) {
         #update the regression coefficients
 
-        Xbeta <- phiBeta$XBeta * (matrix( sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k] )) %*% ones(1, modelTMoE$p+1))
+        Xbeta <- phiBeta$XBeta * (matrix( sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k] )) %*% ones(1, modelTMoE$p + 1))
         yk <- modelTMoE$Y * sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k])
 
         #update the regression coefficients
@@ -92,8 +92,8 @@ ParamTMoE <- setRefClass(
 
 
         delta[k] <<- fzero(f <- function(dlt) {
-          return(- psigamma(dlt/2) + log(dlt/2) +1 + (1/sum(statTMoE$tik[, k])) * sum(statTMoE$tik[, k] * (log(statTMoE$Wik[,k]) - statTMoE$Wik[,k]))
-          +psigamma((delta[k] + 1)/2) - log((delta[k] + 1)/2))
+          return(-psigamma(dlt/2) + log(dlt/2) + 1 + (1 / sum(statTMoE$tik[, k])) * sum(statTMoE$tik[, k] * (log(statTMoE$Wik[,k]) - statTMoE$Wik[,k]))
+                 + psigamma((delta[k] + 1)/2) - log((delta[k] + 1)/2))
         }, delta[k])$x
 
       }
