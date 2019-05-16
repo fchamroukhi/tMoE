@@ -1,8 +1,3 @@
-source("R/utils.R")
-source("R/ParamTMoE.R")
-source("R/StatTMoE.R")
-source("R/FittedTMoE.R")
-
 EM <- function(modelTMoE, n_tries = 1, max_iter = 1500, threshold = 1e-6, verbose = FALSE, verbose_IRLS = FALSE) {
     phiBeta <- designmatrix(x = modelTMoE$X, p = modelTMoE$p)
     phiAlpha <- designmatrix(x = modelTMoE$X, p = modelTMoE$q)

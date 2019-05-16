@@ -1,5 +1,3 @@
-source("R/model_logit.R")
-
 StatTMoE <- setRefClass(
   "StatTMoE",
   fields = list(
@@ -26,7 +24,7 @@ StatTMoE <- setRefClass(
   methods = list(
     MAP = function() {
       "
-      calcule une partition d'un echantillon par la regle du Maximum A Posteriori à partir des probabilites a posteriori
+      calcule une partition d'un echantillon par la regle du Maximum A Posteriori ?? partir des probabilites a posteriori
       Entrees : post_probas , Matrice de dimensions [n x K] des probabibiltes a posteriori (matrice de la partition floue)
       n : taille de l'echantillon
       K : nombres de classes
@@ -38,7 +36,7 @@ StatTMoE <- setRefClass(
       1<=k<=K
       Sorties : classes : vecteur collones contenant les classe (1:K)
       Z : Matrice de dimension [nxK] de la partition dure : ses elements sont zik, avec zik=1 si xi
-      appartient à la classe k (au sens du MAP) et zero sinon.
+      appartient ?? la classe k (au sens du MAP) et zero sinon.
       "
       N <- nrow(piik)
       K <- ncol(piik)
@@ -96,8 +94,7 @@ StatTMoE <- setRefClass(
     # EStep
     #######
     EStep = function(modelTMoE, paramTMoE, phiBeta, phiAlpha) {
-      piik <<- modele_logit(paramTMoE$alpha, phiAlpha$XBeta)$probas
-
+      piik <<- multinomialLogit(paramTMoE$alpha, phiAlpha$XBeta, ones(modelTMoE$n, modelTMoE$K), ones(modelTMoE$n, 1))$piik
       piik_fik <- zeros(modelTMoE$m * modelTMoE$n, modelTMoE$K)
 
       for (k in (1:modelTMoE$K)) {
