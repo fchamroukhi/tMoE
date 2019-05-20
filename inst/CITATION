@@ -1,0 +1,32 @@
+citHeader("To cite TMoE in publications use:")
+
+citEntry(
+  entry = "Article",
+  title = "Robust mixture of experts modeling using the t-distribution",
+  author = personList(person(given="F.", family="Chamroukhi")),
+  journal = "Neural Networks - Elsevier",
+  year = "2016",
+  volume = "79",
+  pages = "20--36",
+  url = "https://chamroukhi.com/papers/TMoE.pdf",
+  textVersion = "Chamroukhi F (2016). \u201cRobust mixture of experts modeling using the t-distribution.\u201d
+  _Neural Networks - Elsevier_, *79*, pp. 20-36. <URL: https://chamroukhi.com/papers/TMoE.pdf>."
+)
+
+citEntry(
+  entry    = "Article",
+  title    = "Practical and theoretical aspects of mixture-of-experts modeling: An overview",
+  author = personList(person(given="Hien D.", family="Nguyen"),
+                      person(given="F.", family="Chamroukhi")),
+  journal  = "Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery",
+  publisher = "Wiley Periodicals, Inc",
+  year     = "2018",
+  pages = "e1246--n/a",
+  doi = "https://doi.org/10.1002/widm.1246",
+  url      = "https://chamroukhi.com/papers/Nguyen-Chamroukhi-MoE-DMKD-2018",
+  textVersion = "Nguyen H and Chamroukhi F (2018). \u201cPractical and theoretical aspects
+  of mixture-of-experts modeling: An overview.\u201d _Wiley Interdisciplinary Reviews:
+  Data Mining and Knowledge Discovery_, pp. e1246-n/a.
+  doi: https://doi.org/10.1002/widm.1246 (URL:http://doi.org/https://doi.org/10.1002/widm.1246),
+  <URL: https://chamroukhi.com/papers/Nguyen-Chamroukhi-MoE-DMKD-2018>."
+)
