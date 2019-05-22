@@ -39,7 +39,7 @@ See `help(package="TMoE")` for further details and references provided by `citat
 ```{r}
 data("simulatedstructureddata")
 fData <- FData$new()
-fData$setData(t(simulatedstructureddata$X), simulatedstructureddata$Y)
+fData$setData(simulatedstructureddata$X, simulatedstructureddata$Y)
 ```
 
 # Set up TMoE model parameters
