@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // IRLS
 List IRLS(arma::mat& X, arma::mat& Tau, arma::mat& Gamma, arma::mat& Winit, bool verbose);
-RcppExport SEXP _TMoE_IRLS(SEXP XSEXP, SEXP TauSEXP, SEXP GammaSEXP, SEXP WinitSEXP, SEXP verboseSEXP) {
+RcppExport SEXP _tMoE_IRLS(SEXP XSEXP, SEXP TauSEXP, SEXP GammaSEXP, SEXP WinitSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -23,7 +23,7 @@ END_RCPP
 }
 // multinomialLogit
 List multinomialLogit(arma::mat& W, arma::mat& X, arma::mat& Y, arma::mat& Gamma);
-RcppExport SEXP _TMoE_multinomialLogit(SEXP WSEXP, SEXP XSEXP, SEXP YSEXP, SEXP GammaSEXP) {
+RcppExport SEXP _tMoE_multinomialLogit(SEXP WSEXP, SEXP XSEXP, SEXP YSEXP, SEXP GammaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -37,12 +37,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_TMoE_IRLS", (DL_FUNC) &_TMoE_IRLS, 5},
-    {"_TMoE_multinomialLogit", (DL_FUNC) &_TMoE_multinomialLogit, 4},
+    {"_tMoE_IRLS", (DL_FUNC) &_tMoE_IRLS, 5},
+    {"_tMoE_multinomialLogit", (DL_FUNC) &_tMoE_multinomialLogit, 4},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_TMoE(DllInfo *dll) {
+RcppExport void R_init_tMoE(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

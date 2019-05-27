@@ -21,7 +21,7 @@ User-friendly and flexible algorithm for modeling, sampling, inference, and clus
 
 ## Installation
 
-You can install the development version of TMoE from [GitHub](https://github.com/) with:
+You can install the development version of tMoE from [GitHub](https://github.com/) with:
 
 ```{r, eval = FALSE}
 # install.packages("devtools")
@@ -40,13 +40,13 @@ devtools::install_github("fchamroukhi/tMoE",
 Use the following command to display vignettes:
 
 ```{r, eval = FALSE}
-browseVignettes("TMoE")
+browseVignettes("tMoE")
 ```
 
 ## Usage
 
 ```{r, message = FALSE}
-library(TMoE)
+library(tMoE)
 
 data("simulatedstructureddata")
 fData <- FData(simulatedstructureddata$X, simulatedstructureddata$Y)

@@ -1,4 +1,4 @@
-Package: TMoE
+Package: tMoE
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
@@ -9,7 +9,7 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: true
 Collate:
-    TMoE-package.R
+    tMoE-package.R
     RcppExports.R
     utils.R
     FData.R

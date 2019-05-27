@@ -3,4 +3,4 @@ exportPattern("^[[:alpha:]]+")
 
 importFrom(Rcpp,sourceCpp)
 importFrom(pracma,fzero)
-useDynLib(TMoE, .registration = TRUE)
+useDynLib(tMoE, .registration = TRUE)

@@ -2,10 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 IRLS <- function(X, Tau, Gamma, Winit, verbose = FALSE) {
-    .Call(`_TMoE_IRLS`, X, Tau, Gamma, Winit, verbose)
+    .Call(`_tMoE_IRLS`, X, Tau, Gamma, Winit, verbose)
 }
 
 multinomialLogit <- function(W, X, Y, Gamma) {
-    .Call(`_TMoE_multinomialLogit`, W, X, Y, Gamma)
+    .Call(`_tMoE_multinomialLogit`, W, X, Y, Gamma)
 }
 

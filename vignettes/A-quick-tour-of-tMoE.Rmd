@@ -1,8 +1,8 @@
 ---
-title: "A-quick-tour-of-TMoE"
+title: "A-quick-tour-of-tMoE"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A-quick-tour-of-TMoE}
+  %\VignetteIndexEntry{A-quick-tour-of-tMoE}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,13 +26,13 @@ knit_hooks$set(par = function(before, options, envir)
 ```
 
 ```{r, message = FALSE, echo = FALSE}
-library(TMoE)
+library(tMoE)
 ```
 
 # Introduction
 
-**TMoE** is a contributed R package for segmentation. It provides functions for parameter estimation via the EM algorithm. This document gives a quick tour of **TMoE** (version `r packageVersion("TMoE")`) functionalities. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production. 
-See `help(package="TMoE")` for further details and references provided by `citation("TMoE")`.
+**tMoE** is a contributed R package for segmentation. It provides functions for parameter estimation via the EM algorithm. This document gives a quick tour of **tMoE** (version `r packageVersion("tMoE")`) functionalities. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production. 
+See `help(package="tMoE")` for further details and references provided by `citation("tMoE")`.
 
 # Load data
 
@@ -41,7 +41,7 @@ data("simulatedstructureddata")
 fData <- FData(simulatedstructureddata$X, simulatedstructureddata$Y)
 ```
 
-# Set up TMoE model parameters
+# Set up tMoE model parameters
 
 ```{r}
 K <- 2 # number of regimes (mixture components)

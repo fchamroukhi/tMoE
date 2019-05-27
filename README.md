@@ -13,7 +13,7 @@ the t distribution.
 
 ## Installation
 
-You can install the development version of TMoE from
+You can install the development version of tMoE from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -34,13 +34,13 @@ devtools::install_github("fchamroukhi/tMoE",
 Use the following command to display vignettes:
 
 ``` r
-browseVignettes("TMoE")
+browseVignettes("tMoE")
 ```
 
 ## Usage
 
 ``` r
-library(TMoE)
+library(tMoE)
 
 data("simulatedstructureddata")
 fData <- FData(simulatedstructureddata$X, simulatedstructureddata$Y)
