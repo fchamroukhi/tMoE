@@ -1,47 +1,78 @@
 #' @importFrom pracma fzero
-
+#' @export
 ParamTMoE <- setRefClass(
   "ParamTMoE",
   fields = list(
+    fData = "FData",
+    phiBeta = "list",
+    phiAlpha = "list",
+
+    K = "numeric",
+    # number of regimes
+    p = "numeric",
+    # dimension of beta (order of polynomial regression)
+    q = "numeric",
+    # dimension of w (order of logistic regression)
+    nu = "numeric", # degree of freedom
+
     alpha = "matrix",
     beta = "matrix",
     sigma = "matrix",
     delta = "matrix"
   ),
   methods = list(
-    initParam = function(modelTMoE, phiAlpha, phiBeta, try_EM, segmental = FALSE) {
-      alpha <<- matrix(runif((modelTMoE$q + 1) * (modelTMoE$K - 1)), nrow = modelTMoE$q + 1, ncol = modelTMoE$K - 1) #initialisation aleatoire du vercteur parametre du IRLS
+    initialize = function(fData = FData(numeric(1), matrix(1)), K = 1, p = 2, q = 1) {
+
+      fData <<- fData
+
+      phiBeta <<- designmatrix(x = fData$X, p = p)
+      phiAlpha <<- designmatrix(x = fData$X, p = q)
+
+      K <<- K
+      p <<- p
+      q <<- q
+
+      nu <<- (p + q + 3) * K - (q + 1)
+
+      alpha <<- matrix(0, q + 1, K - 1)
+      beta <<- matrix(NA, p + 1, K)
+      sigma <<- matrix(NA, 1, K)
+      delta <<- matrix(NA, K)
+    },
+
+    initParam = function(try_EM, segmental = FALSE) {
+      alpha <<- matrix(runif((q + 1) * (K - 1)), nrow = q + 1, ncol = K - 1) #initialisation aleatoire du vercteur parametre du IRLS
 
       #Initialise the regression parameters (coeffecients and variances):
       if (segmental == FALSE) {
-        Zik <- zeros(modelTMoE$n, modelTMoE$K)
+        Zik <- zeros(n, K)
 
-        klas <- floor(modelTMoE$K * matrix(runif(modelTMoE$n), modelTMoE$n)) + 1
+        klas <- floor(K * matrix(runif(fData$n), fData$n)) + 1
 
-        Zik[klas %*% ones(1, modelTMoE$K) == ones(modelTMoE$n, 1) %*% seq(modelTMoE$K)] <- 1
+        Zik[klas %*% ones(1, K) == ones(fData$n, 1) %*% seq(K)] <- 1
 
         Tauik <- Zik
 
         #beta <<- matrix(0, modelRHLP$p + 1, modelRHLP$K)
         #sigma <<- matrix(0, modelRHLP$K)
 
-        for (k in 1:modelTMoE$K) {
-          Xk <- phiBeta$XBeta * (sqrt(Tauik[, k] %*% ones(1, modelTMoE$p + 1)))
-          yk <- modelTMoE$Y * sqrt(Tauik[, k])
+        for (k in 1:K) {
+          Xk <- phiBeta$XBeta * (sqrt(Tauik[, k] %*% ones(1, p + 1)))
+          yk <- fData$Y * sqrt(Tauik[, k])
 
           beta[, k] <<- solve(t(Xk) %*% Xk) %*% t(Xk) %*% yk
 
-          sigma[k] <<- sum(Tauik[, k] * ((modelTMoE$Y - phiBeta$XBeta %*% beta[, k]) ^ 2)) / sum(Tauik[, k])
+          sigma[k] <<- sum(Tauik[, k] * ((fData$Y - phiBeta$XBeta %*% beta[, k]) ^ 2)) / sum(Tauik[, k])
         }
       }
       else{
         #segmental : segment uniformly the data and estimate the parameters
-        nk <- round(modelTMoE$n / modelTMoE$K) - 1
+        nk <- round(fData$n / K) - 1
 
-        for (k in 1:modelTMoE$K) {
+        for (k in 1:K) {
           i <- (k - 1) * nk + 1
           j <- (k * nk)
-          yk <- matrix(modelTMoE$Y[i:j])
+          yk <- matrix(fData$Y[i:j])
           Xk <- phiBeta$XBeta[i:j,]
 
           beta[, k] <<- solve(t(Xk) %*% Xk) %*% (t(Xk) %*% yk)
@@ -53,15 +84,15 @@ ParamTMoE <- setRefClass(
       }
 
       if (try_EM == 1) {
-        alpha <<- zeros(modelTMoE$q + 1, modelTMoE$K - 1)
+        alpha <<- zeros(q + 1, K - 1)
       }
 
       # Initialize the skewness parameter Lambdak (by equivalence delta)
-      delta <<- 50 * rand(1, modelTMoE$K)
+      delta <<- 50 * rand(1, K)
 
     },
 
-    MStep = function(modelTMoE, statTMoE, phiAlpha, phiBeta, verbose_IRLS) {
+    MStep = function(statTMoE, verbose_IRLS) {
       # M-Step
       res_irls <- IRLS(phiAlpha$XBeta, statTMoE$tik, ones(nrow(statTMoE$tik), 1), alpha, verbose_IRLS)
       statTMoE$piik <- res_irls$piik
@@ -69,20 +100,20 @@ ParamTMoE <- setRefClass(
 
       alpha <<- res_irls$W
 
-      for (k in 1:modelTMoE$K) {
+      for (k in 1:K) {
         #update the regression coefficients
 
-        Xbeta <- phiBeta$XBeta * (matrix( sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k] )) %*% ones(1, modelTMoE$p + 1))
-        yk <- modelTMoE$Y * sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k])
+        Xbeta <- phiBeta$XBeta * (matrix( sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k] )) %*% ones(1, p + 1))
+        yk <- fData$Y * sqrt(statTMoE$tik[,k] * statTMoE$Wik[,k])
 
         #update the regression coefficients
         beta[, k] <<- solve((t(Xbeta) %*% Xbeta)) %*% (t(Xbeta) %*% yk)
 
         # update the variances sigma2k
-        sigma[k] <<- sum(statTMoE$tik[, k] * statTMoE$Wik[,k] * ((modelTMoE$Y - phiBeta$XBeta %*% beta[, k])^2)) / sum(statTMoE$tik[,k])
+        sigma[k] <<- sum(statTMoE$tik[, k] * statTMoE$Wik[,k] * ((fData$Y - phiBeta$XBeta %*% beta[, k])^2)) / sum(statTMoE$tik[,k])
 
         # if ECM (use an additional E-Step with the updatated betak and sigma2k
-        dik <- (modelTMoE$Y - phiBeta$XBeta %*% beta[, k]) / sqrt(sigma[k])
+        dik <- (fData$Y - phiBeta$XBeta %*% beta[, k]) / sqrt(sigma[k])
 
 
         # update the deltak (the skewness parameter)
@@ -99,11 +130,3 @@ ParamTMoE <- setRefClass(
     }
   )
 )
-
-ParamTMoE <- function(modelTMoE) {
-  alpha <- matrix(0, modelTMoE$q + 1, modelTMoE$K - 1)
-  beta <- matrix(NA, modelTMoE$p + 1, modelTMoE$K)
-  sigma <- matrix(NA, 1, modelTMoE$K)
-  delta <- matrix(NA, modelTMoE$K)
-  new("ParamTMoE", alpha = alpha, beta = beta, sigma = sigma, delta = delta)
-}

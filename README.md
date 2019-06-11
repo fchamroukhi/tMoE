@@ -1,28 +1,23 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-## Overview
+Overview
+--------
 
 <!-- badges: start -->
-
 <!-- badges: end -->
+User-friendly and flexible algorithm for modeling, sampling, inference, and clustering heteregenous data with Robust of Mixture-of-Experts using the t distribution.
 
-User-friendly and flexible algorithm for modeling, sampling, inference,
-and clustering heteregenous data with Robust of Mixture-of-Experts using
-the t distribution.
+Installation
+------------
 
-## Installation
-
-You can install the development version of tMoE from
-[GitHub](https://github.com/) with:
+You can install the development version of tMoE from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("fchamroukhi/tMoE")
 ```
 
-To build *vignettes* for examples of usage, type the command below
-instead:
+To build *vignettes* for examples of usage, type the command below instead:
 
 ``` r
 # install.packages("devtools")
@@ -37,19 +32,17 @@ Use the following command to display vignettes:
 browseVignettes("tMoE")
 ```
 
-## Usage
+Usage
+-----
 
 ``` r
 library(tMoE)
 
 data("simulatedstructureddata")
-fData <- FData(simulatedstructureddata$X, simulatedstructureddata$Y)
 
 K <- 2 # number of regimes (mixture components)
 p <- 1 # dimension of beta (order of the polynomial regressors)
 q <- 1 # dimension of w (order of the logistic regression: to be set to 1 for segmentation)
-
-modelTMoE <- ModelTMoE(fData, K, p, q)
 
 n_tries <- 1
 max_iter = 1500
@@ -57,7 +50,7 @@ threshold <- 1e-5
 verbose <- TRUE
 verbose_IRLS <- FALSE
 
-solution <- EM(modelTMoE, n_tries, max_iter, threshold, verbose, verbose_IRLS)
+solution <- emTMoE(simulatedstructureddata$X, matrix(simulatedstructureddata$Y), K, p, q, n_tries, max_iter, threshold, verbose, verbose_IRLS)
 
 solution$plot()
 ```

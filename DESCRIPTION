@@ -7,16 +7,16 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
+Encoding: UTF-8
 LazyData: true
 Collate:
     tMoE-package.R
     RcppExports.R
     utils.R
     FData.R
-    ModelTMoE.R
     ParamTMoE.R
     StatTMoE.R
-    FittedTMoE.R
+    ModelTMoE.R
     ModelLearner.R
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1

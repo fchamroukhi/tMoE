@@ -1,30 +1,50 @@
+#' @export
 ModelTMoE <- setRefClass(
   "ModelTMoE",
-  contains = "FData",
-  # Define the fields
   fields = list(
-    K = "numeric",
-    # number of regimes
-    p = "numeric",
-    # dimension of beta (order of polynomial regression)
-    q = "numeric",
-    # dimension of w (order of logistic regression)
-    nu = "numeric" # degree of freedom
+    paramTMoE = "ParamTMoE",
+    statTMoE = "StatTMoE"
+  ),
+  methods = list(
+    plot = function() {
+
+      plot.default(paramTMoE$fData$X, paramTMoE$fData$Y, ylab = "y", xlab = "x", cex = 0.7, pch = 3)
+      title(main = "Estimated mean and experts")
+      for (k in 1:paramTMoE$K) {
+        lines(paramTMoE$fData$X, statTMoE$Ey_k[, k], col = "red", lty = "dotted", lwd = 1.5)
+      }
+      lines(paramTMoE$fData$X, statTMoE$Ey, col = "red", lwd = 1.5)
+
+
+      colorsvec = rainbow(paramTMoE$K)
+      plot.default(paramTMoE$fData$X, statTMoE$piik[, 1], type = "l", xlab = "x", ylab = "Mixing probabilities", col = colorsvec[1])
+      title(main = "Mixing probabilities")
+      for (k in 2:paramTMoE$K) {
+        lines(paramTMoE$fData$X, statTMoE$piik[, k], col = colorsvec[k])
+      }
+
+      # Data, Estimated mean functions and 2*sigma confidence regions
+      plot.default(paramTMoE$fData$X, paramTMoE$fData$Y, ylab = "y", xlab = "x", cex = 0.7, pch = 3)
+      title(main = "Estimated mean and confidence regions")
+      lines(paramTMoE$fData$X, statTMoE$Ey, col = "red", lwd = 1.5)
+      lines(paramTMoE$fData$X, statTMoE$Ey - 2 * sqrt(statTMoE$Vary), col = "red", lty = "dotted", lwd = 1.5)
+      lines(paramTMoE$fData$X, statTMoE$Ey + 2 * sqrt(statTMoE$Vary), col = "red", lty = "dotted", lwd = 1.5)
+
+      # Obtained partition
+      plot.default(paramTMoE$fData$X, paramTMoE$fData$Y, ylab = "y", xlab = "x", cex = 0.7, pch = 3)
+      title(main = "Estimated experts and clusters")
+      for (k in 1:paramTMoE$K) {
+        lines(paramTMoE$fData$X, statTMoE$Ey_k[, k], col = colorsvec[k], lty = "dotted", lwd = 1.5)
+      }
+      for (k in 1:paramTMoE$K) {
+        index <- statTMoE$klas == k
+        points(paramTMoE$fData$X[index], paramTMoE$fData$Y[index, ], col = colorsvec[k], cex = 0.7, pch = 3)
+      }
+
+      # Observed data log-likelihood
+      plot.default(unlist(statTMoE$stored_loglik), type = "l", col = "blue", xlab = "EM iteration number", ylab = "Observed data log-likelihood")
+      title(main = "Log-Likelihood")
+
+    }
   )
 )
-
-ModelTMoE <- function(fData, K, p, q) {
-  nu <<- (p + q + 3) * K - (q + 1)
-
-  new(
-    "ModelTMoE",
-    Y = fData$Y,
-    X = fData$X,
-    m = fData$m,
-    n = fData$n,
-    K = K,
-    p = p,
-    q = q,
-    nu = nu
-  )
-}
