@@ -13,7 +13,11 @@ Description: Robust modeling, density estimation, and model-based clustering of
     mixture of experts fitted by the EM algorithm. See also the packages 'SNMoE' and 
     'StMoE'.
 License: GPL (>= 3)
+Depends: 
+    R (>= 2.10)
 Imports: 
+    methods,
+    stats,
     pracma,
     Rcpp
 Suggests: 
