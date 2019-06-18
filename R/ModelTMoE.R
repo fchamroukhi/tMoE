@@ -1,3 +1,12 @@
+#' A Reference Class which represents a fitted TMoE model.
+#'
+#' ModelMRHLP represents a [TMoE][ModelTMoE] model for which parameters have
+#' been estimated.
+#'
+#' @usage NULL
+#' @field paramTMoE A [ParamTMoE][ParamTMoE] object. It contains the estimated values of the parameters.
+#' @field statTMoE A [StatTMoE][StatTMoE] object. It contains all the statistics associated to the TMoE model.
+#' @seealso [ParamTMoE], [StatTMoE]
 #' @export
 ModelTMoE <- setRefClass(
   "ModelTMoE",

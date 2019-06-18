@@ -1,3 +1,20 @@
+#' A Reference Class which contains parameters of a TMoE model.
+#'
+#' ParamTMoE contains all the parameters of a TMoE model.
+#'
+#' @field fData [FData][FData] object representing the sample.
+#' @field K The number of mixture components.
+#' @field p The order of the polynomial regression.
+#' @field q The dimension of the logistic regression. For the purpose of
+#' segmentation, it must be set to 1.
+#' @field nu degree of freedom
+#' @field alpha is the parameter vector of the logistic model with \eqn{alpha_K} being the null vector.
+#' @field beta is the vector of regression coefficients of component k,
+#' the updates for each of the expert component parameters consist in analytically solving a weighted
+#' Gaussian linear regression problem.
+#' @field sigma The variances for the \emph{K} mixture component.
+#' @field delta the skewness parameter lambda (by equivalence delta)
+#' @seealso [FData]
 #' @importFrom pracma fzero
 #' @export
 ParamTMoE <- setRefClass(
