@@ -4,9 +4,9 @@
 \name{StatTMoE-class}
 \alias{StatTMoE-class}
 \alias{StatTMoE}
-\title{A Reference Class which contains statistics of a StMoE model.}
+\title{A Reference Class which contains statistics of a TMoE model.}
 \description{
-StatMRHLP contains all the parameters of a \link[=ParamStMoE]{StMoE} model.
+StatTMoE contains all the parameters of a \link[=ParamTMoE]{TMoE} model.
 }
 \section{Fields}{
 

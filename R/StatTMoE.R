@@ -1,6 +1,6 @@
-#' A Reference Class which contains statistics of a StMoE model.
+#' A Reference Class which contains statistics of a TMoE model.
 #'
-#' StatMRHLP contains all the parameters of a [StMoE][ParamStMoE] model.
+#' StatTMoE contains all the parameters of a [TMoE][ParamTMoE] model.
 #'
 #' @field piik Matrix of size \eqn{(n, K)} representing the probabilities
 #' \eqn{P(zi = k; W) = P(z_{ik} = 1; W)}{P(zi = k; W) = P(z_ik = 1; W)} of the
