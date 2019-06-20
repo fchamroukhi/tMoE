@@ -68,7 +68,7 @@ StatTMoE <- setRefClass(
     tik = "matrix"
   ),
   methods = list(
-    initialize = function(paramTMoE = ParamTMoE(fData = FData(numeric(1), matrix(1)), K = 1, p = 2, q = 1)) {
+    initialize = function(paramTMoE = ParamTMoE()) {
       piik <<- matrix(NA, paramTMoE$fData$n, paramTMoE$K)
       z_ik <<- matrix(NA, paramTMoE$fData$n, paramTMoE$K)
       klas <<- matrix(NA, paramTMoE$fData$n, 1)
