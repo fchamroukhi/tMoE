@@ -67,6 +67,26 @@ tmoe <- emTMoE(simulatedstructureddata$X, matrix(simulatedstructureddata$Y), K, 
 
 # Plots
 
+## Mean curve
+
 ```{r}
-tmoe$plot()
+tmoe$plot(what = "meancurve")
+```
+
+## Confidence regions
+
+```{r}
+tmoe$plot(what = "confregions")
+```
+
+## Clusters
+
+```{r}
+tmoe$plot(what = "clusters")
+```
+
+## Log-likelihood
+
+```{r}
+tmoe$plot(what = "loglikelihood")
 ```
