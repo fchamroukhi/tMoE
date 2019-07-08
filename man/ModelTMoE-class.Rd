@@ -12,9 +12,9 @@ been estimated.
 \section{Fields}{
 
 \describe{
-\item{\code{paramTMoE}}{A \link{ParamTMoE} object. It contains the estimated values of the parameters.}
+\item{\code{param}}{A \link{ParamTMoE} object. It contains the estimated values of the parameters.}
 
-\item{\code{statTMoE}}{A \link{StatTMoE} object. It contains all the statistics associated to the TMoE model.}
+\item{\code{stat}}{A \link{StatTMoE} object. It contains all the statistics associated to the TMoE model.}
 }}
 
 
