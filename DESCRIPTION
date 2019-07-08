@@ -35,7 +35,7 @@ Collate:
     ParamTMoE.R
     StatTMoE.R
     ModelTMoE.R
-    ModelLearner.R
+    emTMoE.R
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
