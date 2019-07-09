@@ -54,8 +54,6 @@ degree of freedom of the StMoE model.}
 \item{\code{AIC}}{Numeric. Value of the AIC (Akaike Information Criterion)
 criterion. The formula is \eqn{AIC = log\_lik - nu}{AIC = log\_lik - nu}.}
 
-\item{\code{cpu_time}}{Numeric. Average executon time of a EM step.}
-
 \item{\code{log_piik_fik}}{Matrix of size \eqn{(n, K)} giving the values of the
 logarithm of the joint probability
 \eqn{P(Y_{i}, \ zi = k)}{P(Yi, zi = k)}, \eqn{i = 1,\dots,n}.}

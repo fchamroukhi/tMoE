@@ -31,8 +31,6 @@
 #' degree of freedom of the StMoE model.
 #' @field AIC Numeric. Value of the AIC (Akaike Information Criterion)
 #' criterion. The formula is \eqn{AIC = log\_lik - nu}{AIC = log\_lik - nu}.
-#' @field cpu_time Numeric. Average executon time of a EM step.
-#'
 #' @field log_piik_fik Matrix of size \eqn{(n, K)} giving the values of the
 #' logarithm of the joint probability
 #' \eqn{P(Y_{i}, \ zi = k)}{P(Yi, zi = k)}, \eqn{i = 1,\dots,n}.
@@ -62,7 +60,6 @@ StatTMoE <- setRefClass(
     BIC = "numeric",
     ICL = "numeric",
     AIC = "numeric",
-    cpu_time = "numeric",
     log_piik_fik = "matrix",
     log_sum_piik_fik = "matrix",
     tik = "matrix"
@@ -83,7 +80,6 @@ StatTMoE <- setRefClass(
       BIC <<- -Inf
       ICL <<- -Inf
       AIC <<- -Inf
-      cpu_time <<- Inf
       log_piik_fik <<- matrix(0, paramTMoE$fData$n, paramTMoE$K)
       log_sum_piik_fik <<- matrix(NA, paramTMoE$fData$n, 1)
       tik <<- matrix(0, paramTMoE$fData$n, paramTMoE$K)
@@ -128,8 +124,7 @@ StatTMoE <- setRefClass(
     #######
     # compute the final solution stats
     #######
-    computeStats = function(paramTMoE, cpu_time_all) {
-      cpu_time <<- mean(cpu_time_all)
+    computeStats = function(paramTMoE) {
 
       # E[yi|zi=k]
       Ey_k <<- paramTMoE$phiBeta$XBeta[1:paramTMoE$fData$n, ] %*% paramTMoE$beta
