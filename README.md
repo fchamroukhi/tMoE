@@ -1,11 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Overview
-
 <!-- badges: start -->
 
 <!-- badges: end -->
+
+## Overview
 
 User-friendly and flexible algorithm for modeling, sampling, inference,
 and clustering heteregenous data with Robust of Mixture-of-Experts using

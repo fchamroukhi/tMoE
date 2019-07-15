@@ -12,10 +12,11 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-"
 )
 ```
-## Overview
 
 <!-- badges: start -->
 <!-- badges: end -->
+
+## Overview
 
 User-friendly and flexible algorithm for modeling, sampling, inference, and clustering heteregenous data with Robust of Mixture-of-Experts using the t distribution.
 
