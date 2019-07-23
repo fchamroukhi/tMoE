@@ -18,9 +18,9 @@ License: GPL (>= 3)
 Depends: 
     R (>= 2.10)
 Imports: 
+    pracma,
     methods,
     stats,
-    pracma,
     Rcpp
 Suggests: 
     knitr,

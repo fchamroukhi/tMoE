@@ -1,6 +1,6 @@
 #' A Reference Class which represents a fitted TMoE model.
 #'
-#' ModelMRHLP represents a [TMoE][ModelTMoE] model for which parameters have
+#' ModelTMoE represents a [TMoE][ModelTMoE] model for which parameters have
 #' been estimated.
 #'
 #' @usage NULL
