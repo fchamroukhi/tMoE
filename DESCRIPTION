@@ -32,6 +32,7 @@ Collate:
     tMoE-package.R
     RcppExports.R
     utils.R
+    sampleUnivTMoE.R
     FData.R
     ParamTMoE.R
     StatTMoE.R
