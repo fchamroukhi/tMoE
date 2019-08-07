@@ -53,7 +53,7 @@ browseVignettes("tMoE")
 library(tMoE)
 ```
 
-```{r, message = FALSE}
+```{r, echo = TRUE}
 n <- 500 # Size of the sample
 K <- 2 # Number of regressors/experts
 p <- 1 # Order of the polynomial regression (regressors/experts)
