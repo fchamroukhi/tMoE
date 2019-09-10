@@ -33,7 +33,6 @@ Collate:
     RcppExports.R
     utils.R
     sampleUnivTMoE.R
-    FData.R
     ParamTMoE.R
     StatTMoE.R
     ModelTMoE.R

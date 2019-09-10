@@ -2,7 +2,6 @@
 
 export(emTMoE)
 export(sampleUnivTMoE)
-exportClasses(FData)
 exportClasses(ModelTMoE)
 exportClasses(ParamTMoE)
 exportClasses(StatTMoE)
