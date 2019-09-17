@@ -38,6 +38,7 @@ Collate:
     StatTMoE.R
     ModelTMoE.R
     emTMoE.R
+    data-tempanomalies.R
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
